@@ -1,0 +1,121 @@
+$p: #9c2de4;
+$b: #2aa2e4;
+
+
+body{
+  position:relative;
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#222;
+  .outer{
+    @for $i from 1 through 6{
+      &:nth-of-type(#{$i}){
+        transform: rotate(0deg) scale(#{$i * $i / 4});
+          animation:spinner#{$i} 6s linear infinite;
+        animation-duration:#{$i * 2}s;
+        @keyframes spinner#{$i}{
+          to{
+            transform: rotate(360deg) scale(#{$i * $i / 4});
+          }
+        }
+      }
+    }
+  }
+  .outer{
+    @for $i from 1 through 6{
+      &:nth-of-type(#{$i}){
+        .wrap{
+          @for $j from 1 through 24{
+            &:nth-of-type(#{$j}){
+              .cube{
+                animation-delay:#{$i * $j / -12}s;
+                .face{
+                  box-shadow:inset 0 0 0 1px adjust-hue(yellow, $j * -16);
+                  background:#222;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .wrap{
+    transform-style:preserve-3d;
+    width:50px;
+    height:50px;
+    position:absolute;
+    left:calc(50% - 25px);
+    top:calc(50% - 25px);
+    margin-top:-125px;
+    transform-origin:50% 150px;
+    animation:breathe 1.5s ease-in-out infinite alternate;
+    will-change:transform-origin;
+    @keyframes breathe{
+      to{
+        transform-origin:50% 175px;
+        margin-top:-150px;
+      }
+    }
+    @for $i from 1 through 24{
+      &:nth-of-type(#{$i}){
+        transform:rotate(#{$i * 15}deg);
+      }
+    }
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation:spin 4s linear infinite;
+      transform:rotateX(0deg) rotateY(0deg) translateZ(50px);
+      will-change:transform;
+      @keyframes spin{
+        50%{
+          transform:rotateX(180deg) rotateY(180deg) translateZ(-50px);
+        }
+        100%{
+          transform:rotateX(360deg) rotateY(360deg) translateZ(50px);
+        }
+      }
+      .face{
+          margin: 0;
+          width: 50px;
+          height: 50px;
+          display: block;
+          position: absolute;
+          animation:shift 2s ease-in-out infinite alternate;
+          transform-style:preserve-3d;
+          backface-visibility:hidden;
+          &:nth-of-type(1){ 
+            //front
+            transform: rotateY(   0deg ) translateZ( 25px );
+        }
+          &:nth-of-type(2){ 
+            //back
+            transform: rotateX( 180deg ) translateZ( 25px );}
+          &:nth-of-type(3){ 
+            //right
+            transform: rotateY(  90deg ) translateZ( 25px );}
+          &:nth-of-type(4){ 
+            //left
+            transform: rotateY( -90deg ) translateZ( 25px );
+            }
+          &:nth-of-type(5){ 
+            //top
+            transform: rotateX(  90deg ) translateZ( 25px );;
+            }
+          &:nth-of-type(6){ 
+            //bottom
+            transform: rotateX( -90deg ) translateZ( 25px );
+            }
+      }
+    }
+  
+  }
+  
+  
+}
